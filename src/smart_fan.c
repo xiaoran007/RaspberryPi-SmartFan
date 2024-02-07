@@ -98,7 +98,7 @@ int main(void){
 
 			char CPUInfo[MAX_SIZE] = {0};
 			unsigned long avgCpuLoad = sys_info.loads[0] / 1000;
-			sprintf(CPUInfo, "CPU: %.1lf%%", get_sysCpuUsage());
+			sprintf(CPUInfo, "CPU:%.1lf%%", get_sysCpuUsage());
 
 			char RamInfo[MAX_SIZE];
 			// unsigned long totalRam = sys_info.totalram >> 20;
@@ -107,9 +107,9 @@ int main(void){
 			mem_info_t mem_info;
 			mem_info = getRAM();
 			// int usedlRam = (mem_info.total-mem_info.free) / 1024;
-			int usedlRam = mem_info.free / 1024;
+			int freelRam = mem_info.free / 1024;
 			int totalRam = mem_info.total / 1024;
-			sprintf(RamInfo, "RAM: %d / %d", usedlRam, totalRam);
+			sprintf(RamInfo, "RAM:%d / %d", freelRam, totalRam);
 
 			char IPInfo[MAX_SIZE];
 			if (readed_ip == 0){
@@ -120,12 +120,12 @@ int main(void){
 						inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
 
 						if (strcmp(ifAddrStruct->ifa_name, "eth0") == 0){
-							sprintf(IPInfo, "eth0: %s", addressBuffer);
+							sprintf(IPInfo, "eth0:%s", addressBuffer);
 							readed_ip = 1;
 							break;
 						}
 						else if (strcmp(ifAddrStruct->ifa_name, "wlan0") == 0){
-							sprintf(IPInfo, "wlan0: %s", addressBuffer);
+							sprintf(IPInfo, "wlan0:%s", addressBuffer);
 							readed_ip = 1;
 							break;
 						}else {
@@ -176,7 +176,7 @@ int main(void){
 				else{
 					temp = atoi(buf) / 1000.0;
 					// printf("temp: %.1f\n", temp);
-					sprintf(CPUTemp, "Temp: %.1fC", temp);
+					sprintf(CPUTemp, "Temp:%.1fC", temp);
 				}
 			}
 			close(fd_temp);
@@ -188,10 +188,16 @@ int main(void){
 			size_t mbTotalsize = totalSize >> 20;
 			unsigned long long freeDisk = disk_info.f_bfree * totalBlocks;
 			size_t mbFreedisk = freeDisk >> 20;
-			sprintf(DiskInfo, "Disk: %ld/%ldMB", mbFreedisk, mbTotalsize);
+
+			size_t gbTotalsize = totalSize >> 30;
+			size_t gbFreedisk = freeDisk >> 30;
+			double gbt = totalSize / (1024.0 * 1024 * 1024);
+			double gbf = freeDisk / (1024.0 * 1024 * 1024);
+			//sprintf(DiskInfo, "Disk: %ld/%ldGB", gbFreedisk, gbTotalsize);
+			sprintf(DiskInfo, "Disk:%.2lf/%.2lfGB", gbf, gbt);
 
 			ssd1306_drawText(0, 0, CPUInfo);
-			ssd1306_drawText(56, 0, CPUTemp);
+			ssd1306_drawText(62, 0, CPUTemp);
 			ssd1306_drawText(0, 8, RamInfo);
 			ssd1306_drawText(0, 16, DiskInfo);
 			ssd1306_drawText(0, 24, IPInfo);
@@ -321,7 +327,7 @@ mem_info_t getRAM(void){
 double cal_cpuoccupy (cpu_occupy_t *o, cpu_occupy_t *n){
     double od, nd;
     double id, sd;
-    double cpu_use ;
+    double cpu_use = 0.0;
  
     od = (double) (o->user + o->nice + o->system +o->idle+o->softirq+o->iowait+o->irq);
     nd = (double) (n->user + n->nice + n->system +n->idle+n->softirq+n->iowait+n->irq);
@@ -330,7 +336,7 @@ double cal_cpuoccupy (cpu_occupy_t *o, cpu_occupy_t *n){
     sd = (double) (o->idle);    
     if((nd-od) != 0)
         cpu_use =100.0 - ((id-sd))/(nd-od)*100.00;
-        cpu_use = 0;
+    	//cpu_use = 0;
     return cpu_use;
 }
  
@@ -365,6 +371,7 @@ double get_sysCpuUsage(){
     get_cpuoccupy((cpu_occupy_t *)&cpu_stat2);
  
     cpu = cal_cpuoccupy ((cpu_occupy_t *)&cpu_stat1, (cpu_occupy_t *)&cpu_stat2);
+	//printf("cpu:%lf\n", cpu);
  
     return cpu;
 }
