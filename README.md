@@ -1,7 +1,17 @@
 # RaspberryPi-SmartFan
 Modified smart cooling fan module driver for raspberry Pi 3B and compatible Dev boards
 
-WiringPi library is no longer maintained, so this driver may not work properly on newer versions of the system.
+
+## Compatibility
+This driver is write for raspberry Pi 3B, compatible with RaspiOS (raspbian) system. Since WiringPi library is no longer maintained, so this driver may not work properly on newer versions of the system.
+
+Tested on following platforms:
+
+| OS   | Arch | Kernel | Base |
+| :---: | :---: | :---: | :---: |
+| Raspberry Pi OS (Legacy) |   32-bit   | 6.1 | Debian 11 (bullseye) |
+| Raspberry Pi OS (Legacy) |   64-bit   | 6.1 | Debian 11 (bullseye) |
+
 ## Build from source
 ### Requirements
 The following packages are required
@@ -25,7 +35,8 @@ git clone https://github.com/WiringPi/WiringPi.git
 cd ./WiringPi
 sudo ./build
 ```
-Then use make to build this module:
+### Build
+use make to build this module:
 ```shell
 make main
 ```
