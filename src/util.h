@@ -6,9 +6,13 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <sys/types.h>
+
 
 #define MODEL_PATH "/proc/device-tree/model"
 #define TEMP_PATH "/sys/class/thermal/thermal_zone0/temp"
+#define MAX_LEN 32
 
 typedef struct mem_info
 {
