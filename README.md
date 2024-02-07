@@ -45,3 +45,27 @@ you can start driver manually, or use following command to set auto start with t
 ```shell
 sudo make install
 ```
+
+## Auto start setting
+check if rc-local service is enabled:
+```shell
+systemctl status rc-local
+```
+if enabled then:
+
+edit rc.local file, insert the path to the executable file before "exit 0":
+```shell
+sudo vim /etc/rc.local
+```
+example path:
+```shell
+~/RaspberryPi-SmartFan/build/smart_fan
+```
+rc.local service may not enable in some system's default settings, use following commands to enable this service:
+```shell
+chmod +x /etc/rc.local
+systemctl daemon-reload
+systemctl start rc-local
+systemctl status rc-local
+```
+You can reboot now.

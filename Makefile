@@ -14,7 +14,7 @@ $(OBJECTS): %.o: %.c
 	$(CC) -c $< -o $(OUTPUT_DIR)/$@ -lwiringPi
 
 main: init $(OBJECTS)
-	$(CC) -o $(OUTPUT_DIR)/main $(addprefix build/, $(OBJECTS)) -lwiringPi
+	$(CC) -o $(OUTPUT_DIR)/smart_fan $(addprefix build/, $(OBJECTS)) -lwiringPi
 
 .PHONY : clean
 clean:
