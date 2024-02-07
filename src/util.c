@@ -31,4 +31,17 @@ int get_pi_version(void){
     }
 }
 
+char* get_ip_info(void){
+    char ip_info[MAX_LEN];
+    struct ifaddrs *ifaddr;
+    getifaddrs(&ifaddr);
+    while (ifaddr!= NULL){
+        if (ifaddr->ifa_addr->sa_family == AF_INET){
+            struct sockaddr_in *ipv4 = &((struct sockaddr_in *)ifAddrStruct->ifa_addr)->sin_addr;
+            inet_ntop(AF_INET, &ipv4->sin_addr, ip_info, MAX_LEN);
+        }
+        ifaddr = ifaddr->ifa_next;
+    }
+}
+
 
