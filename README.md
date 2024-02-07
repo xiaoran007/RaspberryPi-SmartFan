@@ -2,6 +2,11 @@
 Modified smart cooling fan module driver for raspberry Pi 3B and compatible Dev boards
 
 ## Build from source
+### Requirements
+The following packages are required
+* git
+* gcc
+* make
 ### Prepare
 Enable Raspberry Pi I2C interface:
 ```shell
