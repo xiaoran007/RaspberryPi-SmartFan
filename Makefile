@@ -19,3 +19,7 @@ main: init $(OBJECTS)
 .PHONY : clean
 clean:
 	-rm -r $(OUTPUT_DIR)
+
+.PHONY : install
+install:
+	@echo "manual install is needed."

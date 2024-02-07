@@ -40,3 +40,8 @@ use make to build this module:
 ```shell
 make main
 ```
+### Install
+you can start driver manually, or use following command to set auto start with the system:
+```shell
+sudo make install
+```
