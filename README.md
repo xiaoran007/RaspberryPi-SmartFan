@@ -1,11 +1,14 @@
 # RaspberryPi-SmartFan
-Modified smart cooling fan module driver for raspberry Pi 3B and compatible Dev boards
+Modified smart cooling fan module driver for Raspberry Pi 3B and compatible Dev boards
 
 
 ## Compatibility
-This driver is write for raspberry Pi 3B, compatible with RaspiOS (raspbian) system. Since WiringPi library is no longer maintained, so this driver may not work properly on newer versions of the system.
+This driver is written for Raspberry Pi 3B, compatible with the RaspiOS (raspbian) system. Since the WiringPi library is no longer maintained, this driver may not work properly on newer versions of the system.
 
-Tested on following platforms:
+#### Update 2024.6.4
+The WiringPi library now is maintained by **GC2**, but I have not tested the new WiringPi yet, some functions may not work with the new WiringPi.
+
+Tested on the following platforms:
 
 | OS   | Arch | Kernel | Base |
 | :---: | :---: | :---: | :---: |
@@ -25,7 +28,7 @@ sudo raspi-config
 ```
 select Interfacing Options - I2C Enabled
 
-Then make sure WiringPi library is installed, check:
+Then make sure the WiringPi library is installed, check:
 ```shell
 gpio -v
 ```
@@ -41,7 +44,7 @@ use make to build this module:
 make main
 ```
 ### Install
-you can start driver manually, or use following command to set auto start with the system:
+you can start the driver manually, or use the following command to set auto start with the system:
 ```shell
 sudo make install
 ```
@@ -61,7 +64,7 @@ example path:
 ```shell
 ~/RaspberryPi-SmartFan/build/smart_fan
 ```
-rc.local service may not enable in some system's default settings, use following commands to enable this service:
+rc.local service may not enable in some system's default settings, use the following commands to enable this service:
 ```shell
 chmod +x /etc/rc.local
 systemctl daemon-reload
